@@ -1,5 +1,5 @@
 import pandas as pd
-import sqlite3
+from src.ingestion.db import get_connection
 from pathlib import Path
 
 # Path to raw data
@@ -39,7 +39,7 @@ def load_data():
 
 
 def save_to_sqlite(dataframes):
-    conn = sqlite3.connect(DB_PATH)
+    conn = get_connection()
 
     for name, df in dataframes.items():
         df.to_sql(name, conn, if_exists="replace", index=False)
