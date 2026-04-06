@@ -27,17 +27,17 @@ Coming soon
 
 olist-intelligence-agent/
 ├── src/
-│   ├── ingestion/     ← Data loading and cleaning
-│   ├── security/      ← Auth, RBAC, PII masking
-│   ├── agent/         ← AI agent logic
-│   ├── governance/    ← Audit logs, data catalog
-│   └── ui/            ← Streamlit interface
+│   ├── ingestion/      # Data loading and preprocessing
+│   ├── security/       # Authentication, RBAC, PII masking
+│   ├── agent/          # AI agent logic
+│   ├── governance/     # Audit logs, data catalog
+│   └── ui/             # Streamlit app
 ├── data/
-│   ├── raw/           ← Original Olist CSVs
-│   └── processed/     ← Cleaned data
-├── tests/             ← Unit tests
-├── docs/              ← Documentation
-└── notebooks/      ← EDA notebooks
+│   ├── raw/            # Original datasets
+│   └── processed/      # Cleaned data
+├── tests/              # Unit tests
+├── docs/               # Documentation
+└── notebooks/          # Exploratory analysis
 
 
 ## Setup Instructions
