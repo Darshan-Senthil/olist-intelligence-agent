@@ -23,5 +23,14 @@ data/processed/
 .vscode/
 .idea/
 
+# Node at repo root only (app uses frontend/package.json)
+/node_modules/
+/package-lock.json
 
 olist.db
+data/auth.db
+
+# Deploy artifacts
+hostinger-deploy.zip
+hostinger-deploy/
+Archive/

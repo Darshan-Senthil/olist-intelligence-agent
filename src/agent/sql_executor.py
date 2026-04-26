@@ -10,7 +10,11 @@ def execute_read_query(query: str):
     cursor = conn.cursor()
 
     cursor.execute(query)
-    rows = cursor.fetchall()
-
+    description = cursor.description
+    colnames = [d[0] for d in description] if description else []
+    raw_rows = cursor.fetchall()
     conn.close()
-    return rows
+
+    if not colnames:
+        return []
+    return [dict(zip(colnames, row)) for row in raw_rows]

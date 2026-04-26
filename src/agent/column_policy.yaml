@@ -1,0 +1,353 @@
+# InsightPilot column policy — single source for catalog UI and output masking.
+# Sensitivity: public | internal | restricted
+# Mask: none | redact | hash | truncate_text
+version: "1.0"
+
+tables:
+  - name: orders
+    description: "Purchase lifecycle, status, and delivery timestamps per order."
+    columns:
+      - {
+          name: order_id,
+          description: "Order identifier",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: customer_id,
+          description: "Customer on this order",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: order_status,
+          description: "Status such as delivered or canceled",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: order_purchase_timestamp,
+          description: "When the order was purchased",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: order_approved_at,
+          description: "Approval time",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: order_delivered_carrier_date,
+          description: "Carrier handoff",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: order_delivered_customer_date,
+          description: "Delivered to customer",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: order_estimated_delivery_date,
+          description: "Estimated delivery",
+          sensitivity: internal,
+          mask: none,
+        }
+
+  - name: customers
+    description: "Customer identifiers and coarse location (no street address in this dataset)."
+    columns:
+      - {
+          name: customer_id,
+          description: "Primary customer key",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: customer_unique_id,
+          description: "Stable person-level id across orders",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: customer_zip_code_prefix,
+          description: "ZIP prefix only",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: customer_city,
+          description: "City name",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: customer_state,
+          description: "State code",
+          sensitivity: internal,
+          mask: none,
+        }
+
+  - name: items
+    description: "Line items: price and freight per item row (no quantity column)."
+    columns:
+      - {
+          name: order_id,
+          description: "Parent order",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: order_item_id,
+          description: "Line number",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: product_id,
+          description: "Product sold",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: seller_id,
+          description: "Seller fulfilling the line",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: shipping_limit_date,
+          description: "Shipping deadline",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: price,
+          description: "Line item price",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: freight_value,
+          description: "Freight for the line",
+          sensitivity: internal,
+          mask: none,
+        }
+
+  - name: payments
+    description: "Payment splits and values per order."
+    columns:
+      - {
+          name: order_id,
+          description: "Order paid",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: payment_sequential,
+          description: "Payment sequence index",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: payment_type,
+          description: "Method such as credit_card",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: payment_installments,
+          description: "Installment count",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: payment_value,
+          description: "Payment amount",
+          sensitivity: public,
+          mask: none,
+        }
+
+  - name: reviews
+    description: "Review scores and free-text comments tied to orders."
+    columns:
+      - {
+          name: review_id,
+          description: "Review primary key",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: order_id,
+          description: "Order reviewed",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: review_score,
+          description: "1–5 score",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: review_comment_title,
+          description: "Review title text",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: review_comment_message,
+          description: "Review body text",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: review_creation_date,
+          description: "When review was written",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: review_answer_timestamp,
+          description: "Seller response time",
+          sensitivity: public,
+          mask: none,
+        }
+
+  - name: sellers
+    description: "Seller identifiers and coarse location."
+    columns:
+      - {
+          name: seller_id,
+          description: "Seller key",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: seller_zip_code_prefix,
+          description: "ZIP prefix",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: seller_city,
+          description: "City",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: seller_state,
+          description: "State",
+          sensitivity: internal,
+          mask: none,
+        }
+
+  - name: products
+    description: "Product attributes and category (Portuguese name in source)."
+    columns:
+      - {
+          name: product_id,
+          description: "Product key",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: product_category_name,
+          description: "Category in source language",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: product_name_lenght,
+          description: "Name length (dataset spelling)",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: product_description_lenght,
+          description: "Description length",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: product_photos_qty,
+          description: "Photo count",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: product_weight_g,
+          description: "Weight grams",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: product_length_cm,
+          description: "Length",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: product_height_cm,
+          description: "Height",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: product_width_cm,
+          description: "Width",
+          sensitivity: public,
+          mask: none,
+        }
+
+  - name: geolocation
+    description: "ZIP-level coordinates and place names (precise lat/lng treated as sensitive)."
+    columns:
+      - {
+          name: geolocation_zip_code_prefix,
+          description: "ZIP prefix",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: geolocation_lat,
+          description: "Latitude",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: geolocation_lng,
+          description: "Longitude",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: geolocation_city,
+          description: "City",
+          sensitivity: internal,
+          mask: none,
+        }
+      - {
+          name: geolocation_state,
+          description: "State",
+          sensitivity: internal,
+          mask: none,
+        }
+
+  - name: category_translation
+    description: "Maps category names to English labels."
+    columns:
+      - {
+          name: product_category_name,
+          description: "Original category name",
+          sensitivity: public,
+          mask: none,
+        }
+      - {
+          name: product_category_name_english,
+          description: "English category label",
+          sensitivity: public,
+          mask: none,
+        }
